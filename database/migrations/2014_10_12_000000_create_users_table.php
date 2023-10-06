@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('occupation_id')->nullable()->references('id')->on('occupations')->onDelete('cascade');
             $table->string('avatar')->nullable();
+            $table->tinyText('status')->default('offline');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with('occupation')->get();
 
         return Inertia::render('Users/List/UsersList', [
             'users' => $users,
