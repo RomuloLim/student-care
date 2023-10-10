@@ -12,6 +12,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        phone: '',
     });
 
     useEffect(() => {
@@ -31,42 +32,79 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="">
+                        <InputLabel htmlFor="name" value="Nome" />
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+                        <TextInput
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            className="mt-1 block w-full"
+                            autoComplete="name"
+                            isFocused={true}
+                            onChange={(e) => setData('name', e.target.value)}
+                            required
+                        />
 
-                    <InputError message={errors.name} className="mt-2" />
+                        <InputError message={errors.name} className="mt-2" />
+                    </div>
+
+                    <div className="">
+                        <InputLabel htmlFor="phone" value="Telefone" />
+
+                        <TextInput
+                            id="phone"
+                            name="phone"
+                            value={data.phone}
+                            className="mt-1 block w-full"
+                            autoComplete="phone"
+                            isFocused={true}
+                            onChange={(e) => setData('phone', e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.name} className="mt-2" />
+                    </div>
+                </div>
+
+                <div className="flex mt-4 gap-4">
+                    <div className="grid">
+                        <InputLabel htmlFor="email" value="Email" />
+
+                        <TextInput
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            className="mt-1 block w-full"
+                            autoComplete="username"
+                            onChange={(e) => setData('email', e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.email} className="mt-2" />
+                    </div>
+                    <div className="grid">
+                        <InputLabel htmlFor="email" value="Email" />
+
+                        <TextInput
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            className="mt-1 block w-full"
+                            autoComplete="username"
+                            onChange={(e) => setData('email', e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.email} className="mt-2" />
+                    </div>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Senha" />
 
                     <TextInput
                         id="password"
@@ -83,7 +121,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirmar Senha" />
 
                     <TextInput
                         id="password_confirmation"
@@ -98,6 +136,7 @@ export default function Register() {
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
+
 
                 <div className="flex items-center justify-end mt-4">
                     <Link
