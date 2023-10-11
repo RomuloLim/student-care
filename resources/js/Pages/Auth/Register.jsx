@@ -1,34 +1,36 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from "react";
+import GuestLayout from "@/Layouts/GuestLayout";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Register() {
+export default function Register({ occupations }) {
+    console.log(occupations);
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        phone: '',
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        phone: "",
+        occupation: "",
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset("password", "password_confirmation");
         };
     }, []);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        post(route("register"));
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout fullsize={true}>
             <Head title="Register" />
 
             <form onSubmit={submit}>
@@ -43,7 +45,7 @@ export default function Register() {
                             className="mt-1 block w-full"
                             autoComplete="name"
                             isFocused={true}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => setData("name", e.target.value)}
                             required
                         />
 
@@ -60,7 +62,7 @@ export default function Register() {
                             className="mt-1 block w-full"
                             autoComplete="phone"
                             isFocused={true}
-                            onChange={(e) => setData('phone', e.target.value)}
+                            onChange={(e) => setData("phone", e.target.value)}
                             required
                         />
 
@@ -68,8 +70,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex mt-4 gap-4">
-                    <div className="grid">
+                <div className="grid grid-cols-2 mt-4 gap-4">
+                    <div className="">
                         <InputLabel htmlFor="email" value="Email" />
 
                         <TextInput
@@ -79,27 +81,39 @@ export default function Register() {
                             value={data.email}
                             className="mt-1 block w-full"
                             autoComplete="username"
-                            onChange={(e) => setData('email', e.target.value)}
+                            onChange={(e) => setData("email", e.target.value)}
                             required
                         />
 
                         <InputError message={errors.email} className="mt-2" />
                     </div>
-                    <div className="grid">
-                        <InputLabel htmlFor="email" value="Email" />
+                    <div className="">
+                        <InputLabel htmlFor="email" value="Cargo" />
+                        {/* TODO: switch to searchable select2 */}
+                        <select
+                            className="select w-full"
+                            defaultValue=""
+                            onChange={(e) =>
+                                setData("occupation", e.target.value)
+                            }
+                        >
+                            <option disabled value="">
+                                Selecione um cargo
+                            </option>
+                            {occupations.map((occupation) => (
+                                <option
+                                    key={occupation.id}
+                                    value={occupation.id}
+                                >
+                                    {occupation.name}
+                                </option>
+                            ))}
+                        </select>
 
-                        <TextInput
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            autoComplete="username"
-                            onChange={(e) => setData('email', e.target.value)}
-                            required
+                        <InputError
+                            message={errors.occupation}
+                            className="mt-2"
                         />
-
-                        <InputError message={errors.email} className="mt-2" />
                     </div>
                 </div>
 
@@ -113,7 +127,7 @@ export default function Register() {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
 
@@ -121,7 +135,10 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirmar Senha" />
+                    <InputLabel
+                        htmlFor="password_confirmation"
+                        value="Confirmar Senha"
+                    />
 
                     <TextInput
                         id="password_confirmation"
@@ -130,17 +147,21 @@ export default function Register() {
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        onChange={(e) =>
+                            setData("password_confirmation", e.target.value)
+                        }
                         required
                     />
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    <InputError
+                        message={errors.password_confirmation}
+                        className="mt-2"
+                    />
                 </div>
-
 
                 <div className="flex items-center justify-end mt-4">
                     <Link
-                        href={route('login')}
+                        href={route("login")}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Already registered?
